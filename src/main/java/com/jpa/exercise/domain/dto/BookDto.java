@@ -15,11 +15,11 @@ public class BookDto {
     private String name;
     private String authorName;
 
-    public static BookDto of(Book book, String authorName) {
+    public static BookDto of(Book book) {
         return BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
-                .authorName(authorName)
+                .authorName(book.getAuthor().getName())
                 .build();
     }
 }

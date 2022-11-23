@@ -17,35 +17,31 @@ import java.util.stream.Collectors;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
-    private final AuthorRepository authorRepository;
 
-    public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
     }
 
-    public List<BookDto> getAll(){
-        List<Book> books = bookRepository.findAll();
-        List<BookDto> bookDtos = new ArrayList<>();
-        for (Book book : books) {
-            Optional<Author> optAuthor = authorRepository.findById(book.getAuthorId());
-
-            if (optAuthor.isEmpty()) {
-                bookDtos.add(new BookDto(book.getId(), book.getName(), "작가미상"));
-            } else {
-                bookDtos.add(new BookDto(book.getId(), book.getName(), optAuthor.get().getName()));
-            }
-        }
-        return bookDtos;
-    }
+//    public List<BookDto> getAll(){
+//        List<Book> books = bookRepository.findAll();
+//        List<BookDto> bookDtos = new ArrayList<>();
+//        for (Book book : books) {
+//            Optional<Author> optAuthor = authorRepository.findById(book.getAuthorId());
+//
+//            if (optAuthor.isEmpty()) {
+//                bookDtos.add(new BookDto(book.getId(), book.getName(), "작가미상"));
+//            } else {
+//                bookDtos.add(new BookDto(book.getId(), book.getName(), optAuthor.get().getName()));
+//            }
+//        }
+//        return bookDtos;
+//    }
 
     public List<BookDto> getAll2(Pageable pageable){
         Page<Book> books = bookRepository.findAll(pageable);
         List<BookDto> bookDtos = books.stream()
-                .map(book -> {
-                    Optional<Author> optionalAuthor = authorRepository.findById(book.getAuthorId());
-                    return BookDto.of(book, optionalAuthor.get().getName());
-                }).collect(Collectors.toList());
+                .map(book ->
+                        BookDto.of(book)).collect(Collectors.toList());
         return bookDtos;
     }
 }
