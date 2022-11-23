@@ -3,6 +3,7 @@ package com.jpa.exercise.controller;
 import com.jpa.exercise.domain.dto.BookDto;
 import com.jpa.exercise.service.BookService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +41,13 @@ public class BookRestController {
         String response = String.valueOf(stringBuilder);
 
         return response;
+    }
+
+    @GetMapping("/list2")
+    public ResponseEntity<List<BookDto>> getAll2(Pageable pageable) {
+        List<BookDto> bookDtos= bookService.getAll2(pageable);
+        BookDto bookDto = bookDtos.get(0);
+        log.info("id={}, name={}, authorName={}", bookDto.getId(), bookDto.getName(), bookDto.getAuthorName());
+        return ResponseEntity.ok().body(bookService.getAll2(pageable));
     }
 }

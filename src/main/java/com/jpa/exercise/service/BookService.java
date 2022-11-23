@@ -5,11 +5,14 @@ import com.jpa.exercise.domain.entity.Author;
 import com.jpa.exercise.domain.entity.Book;
 import com.jpa.exercise.domain.repository.AuthorRepository;
 import com.jpa.exercise.domain.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -33,6 +36,16 @@ public class BookService {
                 bookDtos.add(new BookDto(book.getId(), book.getName(), optAuthor.get().getName()));
             }
         }
+        return bookDtos;
+    }
+
+    public List<BookDto> getAll2(Pageable pageable){
+        Page<Book> books = bookRepository.findAll(pageable);
+        List<BookDto> bookDtos = books.stream()
+                .map(book -> {
+                    Optional<Author> optionalAuthor = authorRepository.findById(book.getAuthorId());
+                    return BookDto.of(book, optionalAuthor.get().getName());
+                }).collect(Collectors.toList());
         return bookDtos;
     }
 }
