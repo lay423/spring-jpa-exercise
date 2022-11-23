@@ -23,7 +23,7 @@ public class BookRestController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list2")
     public String getAll() {
         StringBuilder stringBuilder = new StringBuilder();
         List<BookDto> bookDtos =bookService.getAll();
@@ -43,7 +43,7 @@ public class BookRestController {
         return response;
     }
 
-    @GetMapping("/list2")
+    @GetMapping("/lists")
     public ResponseEntity<List<BookDto>> getAll2(Pageable pageable) {
         List<BookDto> bookDtos= bookService.getAll2(pageable);
         BookDto bookDto = bookDtos.get(0);
