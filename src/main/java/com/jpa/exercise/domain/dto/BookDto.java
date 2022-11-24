@@ -14,12 +14,14 @@ public class BookDto {
     private long id;
     private String name;
     private String authorName;
+    private String publisherName;
 
     public static BookDto of(Book book) {
         return BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
                 .authorName(book.getAuthor().getName())
+                .publisherName(book.getPublisher().getName())
                 .build();
     }
 }

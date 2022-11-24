@@ -1,9 +1,7 @@
 package com.jpa.exercise.service;
 
 import com.jpa.exercise.domain.dto.BookDto;
-import com.jpa.exercise.domain.entity.Author;
 import com.jpa.exercise.domain.entity.Book;
-import com.jpa.exercise.domain.repository.AuthorRepository;
 import com.jpa.exercise.domain.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
