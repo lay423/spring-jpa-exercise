@@ -3,11 +3,16 @@ package com.jpa.exercise.service;
 import com.jpa.exercise.domain.dto.ReviewDto;
 import com.jpa.exercise.domain.dto.ReviewRequest;
 import com.jpa.exercise.domain.entity.Hospital;
+import com.jpa.exercise.domain.entity.Review;
 import com.jpa.exercise.domain.repository.HospitalRepository;
 import com.jpa.exercise.domain.repository.ReviewRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -26,5 +31,13 @@ public class ReviewService {
         else
             hospital = new Hospital(404L, "없음", "없음");
         return reviewRepository.save(reviewRequest.toEntity(hospital)).toResponse("등록이 성공했습니다.");
+    }
+
+    public List<ReviewDto> getReviews(Pageable pageable) {
+        Page<Review> reviewPage = reviewRepository.findAll(pageable);
+        List<ReviewDto> reviewDtos = reviewPage.stream()
+                .map(review ->
+                        ReviewDto.of(review)).collect(Collectors.toList());
+        return reviewDtos;
     }
 }
