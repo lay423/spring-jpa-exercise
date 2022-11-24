@@ -40,4 +40,14 @@ public class ReviewService {
                         ReviewDto.of(review)).collect(Collectors.toList());
         return reviewDtos;
     }
+
+    public ReviewDto getReview(Long id) {
+        Optional<Review> optionalReview = reviewRepository.findById(id);
+        Review savedReview;
+        if(optionalReview.isPresent())
+            return ReviewDto.of(optionalReview.get());
+        else
+            return ReviewDto.builder().message("존재하지 않는 리뷰id입니다.").build();
+
+    }
 }

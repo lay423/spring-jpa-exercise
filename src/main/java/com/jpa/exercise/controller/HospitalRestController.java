@@ -43,4 +43,9 @@ public class HospitalRestController {
     public ResponseEntity<List<ReviewDto>> getReview(Pageable pageable){
         return ResponseEntity.ok().body(reviewService.getReviews(pageable));
     }
+
+    @GetMapping("{id}/reviews")
+    public ResponseEntity<ReviewDto> getReviewById(@PathVariable long id) {
+        return ResponseEntity.ok().body(reviewService.getReview(id));
+    }
 }
