@@ -41,6 +41,23 @@ public class ReviewService {
         return reviewDtos;
     }
 
+    public List<ReviewDto> getReviewsByHospitalId(Pageable pageable, long hospitalId) {
+        Hospital hospital = hospitalRepository.findById(hospitalId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 Id가 없습니다."));
+        List<ReviewDto> reviews = reviewRepository.findAllByHospital(hospital)
+                .stream().map(review -> ReviewDto.builder()
+                        .title(review.getTitle())
+                        .content(review.getContent())
+                        .patientName(review.getPatientName())
+                        .hospitalName(review.getHospital().getName())
+                        .message("불러오기 완료")
+                        .build())
+                .collect(Collectors.toList());
+
+        return reviews;
+    }
+
+
     public ReviewDto getReview(Long id) {
         Optional<Review> optionalReview = reviewRepository.findById(id);
         Review savedReview;

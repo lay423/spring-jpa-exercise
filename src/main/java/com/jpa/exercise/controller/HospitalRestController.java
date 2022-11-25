@@ -29,23 +29,16 @@ public class HospitalRestController {
         return ResponseEntity.ok().body(hospitalService.getHospitals(pageable));
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<List<ReviewDto>> getReview(Pageable pageable, @PathVariable long id) {
-//        return ResponseEntity.ok().body(hospitalService.getReviewByHospitals(pageable, id));
-//    }
 
     @PostMapping("{id}/reviews")
     public ResponseEntity<ReviewDto> addReview(@PathVariable long id, @RequestBody ReviewRequest reviewRequest) {
         return ResponseEntity.ok().body(reviewService.addReview(id, reviewRequest));
     }
 
-    @GetMapping("/reviews")
-    public ResponseEntity<List<ReviewDto>> getReview(Pageable pageable){
-        return ResponseEntity.ok().body(reviewService.getReviews(pageable));
+    @GetMapping("{id}/reviews")
+    public ResponseEntity<List<ReviewDto>> getReviewsByHospitalId(@PathVariable long id, Pageable pageable) {
+        return ResponseEntity.ok().body(reviewService.getReviewsByHospitalId(pageable, id));
     }
 
-    @GetMapping("reviews/{id}")
-    public ResponseEntity<ReviewDto> getReviewById(@PathVariable long id) {
-        return ResponseEntity.ok().body(reviewService.getReview(id));
-    }
+
 }
