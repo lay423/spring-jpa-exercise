@@ -7,30 +7,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HospitalDto  {
+public class HospitalReadResponse {
+
     private long id;
     private String name;
     private String roadNameAddress;
     private List<ReviewDto> reviews;
 
-    public static HospitalDto of(Hospital hospital) {
-        return HospitalDto.builder()
+    public static HospitalReadResponse of3(Hospital hospital) {
+        return HospitalReadResponse.builder()
                 .id(hospital.getId())
                 .name(hospital.getName())
                 .roadNameAddress(hospital.getRoadNameAddress())
+                .reviews(hospital.getReviews().stream()
+                        .map(review -> ReviewDto.of(review)).collect(Collectors.toList()))
                 .build();
     }
-    public static HospitalDto of2(Hospital hospital, List<ReviewDto> reviews) {
-        return HospitalDto.builder()
-                .id(hospital.getId())
-                .name(hospital.getName())
-                .roadNameAddress(hospital.getRoadNameAddress())
-                .reviews(reviews)
-                .build();
-    }
+
 }

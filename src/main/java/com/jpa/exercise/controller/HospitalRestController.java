@@ -36,9 +36,12 @@ public class HospitalRestController {
     }
 
     @GetMapping("{id}/reviews")
-    public ResponseEntity<List<ReviewDto>> getReviewsByHospitalId(@PathVariable long id, Pageable pageable) {
-        return ResponseEntity.ok().body(reviewService.getReviewsByHospitalId(pageable, id));
+    public ResponseEntity<List<ReviewDto>> getReviewsByHospitalId(@PathVariable long id) {
+        return ResponseEntity.ok().body(reviewService.getReviewsByHospitalId(id));
     }
 
-
+    @GetMapping("{id}")
+    public ResponseEntity<HospitalDto> getHospitalById(@PathVariable long id) {
+        return ResponseEntity.ok().body(hospitalService.getHospitalById(id));
+    }
 }

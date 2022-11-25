@@ -41,7 +41,7 @@ public class ReviewService {
         return reviewDtos;
     }
 
-    public List<ReviewDto> getReviewsByHospitalId(Pageable pageable, long hospitalId) {
+    public List<ReviewDto> getReviewsByHospitalId(long hospitalId) {
         Hospital hospital = hospitalRepository.findById(hospitalId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 Id가 없습니다."));
         List<ReviewDto> reviews = reviewRepository.findAllByHospital(hospital)
