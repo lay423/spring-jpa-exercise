@@ -46,6 +46,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 Id가 없습니다."));
         List<ReviewDto> reviews = reviewRepository.findAllByHospital(hospital)
                 .stream().map(review -> ReviewDto.builder()
+                        .id(review.getId())
                         .title(review.getTitle())
                         .content(review.getContent())
                         .patientName(review.getPatientName())
